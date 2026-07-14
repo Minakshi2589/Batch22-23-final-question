@@ -1,0 +1,16 @@
+.card {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+label { display: block; margin-top: 10px; font-weight: 600; }
+select, input { width: 100%; padding: 8px; margin-top: 4px; }
+button { margin-top: 16px; padding: 8px 16px; cursor: pointer; }
+.error { color: #c0392b; font-size: 12px; }
+.success { color: #27ae60; }
+table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+.eligible { color: #27ae60; font-weight: 600; }
+.not-eligible { color: #c0392b; font-weight: 600; }

@@ -1,0 +1,77 @@
+<div class="card">
+  <h2>Mark Entry Form</h2>
+
+  <form [formGroup]="entryForm" (ngSubmit)="onSave()">
+    <label>Select Batch</label>
+    <select formControlName="batch_id">
+      <option [ngValue]="null">-- Select Batch --</option>
+      <option *ngFor="let b of batches" [ngValue]="b.Batch_id">{{ b.Batch_Name }}</option>
+    </select>
+    <div class="error" *ngIf="entryForm.get('batch_id')?.touched && entryForm.get('batch_id')?.invalid">
+      Batch is required
+    </div>
+
+    <label>Select Technology</label>
+    <select formControlName="technology_id">
+      <option [ngValue]="null">-- Select Technology --</option>
+      <option *ngFor="let t of technologies" [ngValue]="t.Technology_id">{{ t.Technology_Name }}</option>
+    </select>
+    <div class="error" *ngIf="entryForm.get('technology_id')?.touched && entryForm.get('technology_id')?.invalid">
+      Technology is required
+    </div>
+
+    <label>Select Employee</label>
+    <select formControlName="employee_id">
+      <option [ngValue]="null">-- Select Employee --</option>
+      <option *ngFor="let e of employees" [ngValue]="e.Employee_id">{{ e.Employee_Name }}</option>
+    </select>
+    <div class="error" *ngIf="entryForm.get('employee_id')?.touched && entryForm.get('employee_id')?.invalid">
+      Employee is required
+    </div>
+
+    <label>Enter Mark</label>
+    <input type="number" formControlName="mark" min="0" max="100" />
+    <div class="error" *ngIf="entryForm.get('mark')?.touched && entryForm.get('mark')?.invalid">
+      Mark must be between 0 and 100
+    </div>
+
+    <button type="submit">Save</button>
+  </form>
+
+  <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+</div>
+
+<div class="card">
+  <label>Select Batch</label>
+  <select [(ngModel)]="reportBatchId" [ngModelOptions]="{standalone: true}">
+    <option [ngValue]="null">-- Select Batch --</option>
+    <option *ngFor="let b of batches" [ngValue]="b.Batch_id">{{ b.Batch_Name }}</option>
+  </select>
+  <button (click)="onShowReport()">Show Report</button>
+
+  <table *ngIf="reportRows.length">
+    <thead>
+      <tr>
+        <th>Slno</th><th>Batch Name</th><th>Technology</th><th>Employee Name</th>
+        <th>Phone</th><th>Mark</th><th>Grade</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of reportRows">
+        <td>{{ r.slno }}</td>
+        <td>{{ r.Batch_Name }}</td>
+        <td>{{ r.Technology_Name }}</td>
+        <td>{{ r.Employee_Name }}</td>
+        <td>{{ r.Employee_Phone }}</td>
+        <td>{{ r.mark }}</td>
+        <td>{{ r.grade }}</td>
+        <td [class.eligible]="r.status === 'Eligible'" [class.not-eligible]="r.status !== 'Eligible'">
+          {{ r.status }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button *ngIf="reportRows.length" (click)="onDownloadPdf()">Download in PDF Format</button>
+</div>
